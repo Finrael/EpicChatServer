@@ -9,6 +9,7 @@ router.post('/register', (req, res) => {
     let post = new User({
         username: req.body.username,
         email: req.body.email,
+        contacts: [],
         // password: req.body.password
     });
     post.setPassword(req.body.password, function (err, user) {
@@ -22,13 +23,13 @@ router.post('/register', (req, res) => {
                 throw err;
             } else {
                 console.log('save name successfull')
-                // res.end();
+                res.end();
             }
         })
     });
     console.log('postRegister is in: ', req.body);
 // res.end();
 });
-
+ 
 
 export default router;

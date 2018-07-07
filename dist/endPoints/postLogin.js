@@ -11,6 +11,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = __importDefault(require("../constants"));
 router.post('/logIn', passport_1.default.authenticate('local', { session: false }), (req, res) => {
     const { _id, email, username } = req.user;
+    console.log('req user from login', req.user);
     const token = jsonwebtoken_1.default.sign({ _id, email, username }, constants_1.default, { expiresIn: "24h" });
     res.cookie('CookieUser', token);
     res.json({ token });

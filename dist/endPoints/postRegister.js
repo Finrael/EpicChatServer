@@ -11,6 +11,7 @@ router.post('/register', (req, res) => {
     let post = new registerSchema_1.default({
         username: req.body.username,
         email: req.body.email,
+        contacts: [],
     });
     post.setPassword(req.body.password, function (err, user) {
         if (err) {
@@ -24,7 +25,7 @@ router.post('/register', (req, res) => {
             }
             else {
                 console.log('save name successfull');
-                // res.end();
+                res.end();
             }
         });
     });

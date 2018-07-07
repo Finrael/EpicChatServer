@@ -8,6 +8,8 @@ import {
     PassportLocalSchema,
     PassportLocalOptions,
     PassportLocalErrorMessages,
+    SchemaTypes,
+    SchemaType
 
 } from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose';
@@ -25,7 +27,8 @@ const registerSchema = new Schema({
     email:{type:String, unique:true},
     password:String,
     attempts:Number,
-    contacts: Array(String),
+    contacts: [{contact:
+        {type:SchemaTypes.ObjectId, ref:'users'}, conversationId:{type:SchemaTypes.ObjectId, ref:'conversation'}} ],
 });
 //create the options object and fills the required fields
 let options: PassportLocalOptions = <PassportLocalOptions>{};
