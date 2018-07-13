@@ -21,6 +21,7 @@ const passport_1 = __importDefault(require("passport"));
 require("../endPoints/jwtStrategy");
 //import the endpoints 
 const endPoints_1 = __importDefault(require("./../endPoints"));
+// import chatEndpoint from './../chatEndpoints';
 // instructions to connect to the db (registerDB)
 mongoose_1.default.connect('mongodb://localhost:27017/registerDB', (error) => {
     if (error) {
@@ -44,5 +45,7 @@ app.use(passportExpressMiddleware);
 app.use(cookie_parser_1.default());
 // if the route from the browser implies /api sends them to the index.ts file on folder endpoints
 app.use('/api', endPoints_1.default);
+// app.use('/chat/api', endPoints);
+// app.use('/chat/api', chatEndpoint);
 // instruction to listen to a port 
 app.listen(port, () => console.log(`Listening on port ${port}`));

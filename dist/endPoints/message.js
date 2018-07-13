@@ -13,24 +13,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // imports
 const express_1 = __importDefault(require("express"));
-const registerSchema_1 = __importDefault(require("../db/models/registerSchema"));
 const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
-router.use('/getAvailablecontacts', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
-    console.log('req.user: ', req.user);
-    const listOfAvailableContacts = yield registerSchema_1.default.findOne({ _id: req.user._id }, { contacts: 1 })
-        .populate({
-        path: 'contacts.contact',
-        select: 'username  email'
-    });
-    //  .populate({
-    //      path: 'contacts.conversationId',
-    //      select:  'participants creationTime',
-    //      populate: {
-    //          path: 'participants.participant',
-    //          select: 'email, username'
-    //      }});
-    console.log('list from the populate for availablecontacts3:', listOfAvailableContacts);
-    res.json(listOfAvailableContacts);
+const messageSchema_1 = __importDefault(require("../db/models/messageSchema"));
+const mongoose_1 = require("mongoose");
+router.use('/message', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
+    //  console.log('from authenticate getProfile ',req.user);
+    try {
+        console.log('body: ', req.body);
+        console.log('user: ', req.user);
+        const creationDate = new Date();
+        const newMessage = {
+            messageText: req.body.textMessage,
+            messageTime: creationDate,
+            messageOriginator: { _Id: req.user._id, name: req.user.username },
+            conversationId: new mongoose_1.Types.ObjectId(req.body.convId),
+        };
+        const generateMessage = yield messageSchema_1.default.create(newMessage);
+        console.log(generateMessage);
+        res.json(generateMessage);
+    }
+    catch (e) {
+        console.log(e);
+        res.end();
+    }
+    // res.json(newMessage)
 }));
 exports.default = router;

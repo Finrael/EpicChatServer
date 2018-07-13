@@ -23,6 +23,7 @@ import PassportJWT from 'passport-jwt';
 import '../endPoints/jwtStrategy';
 //import the endpoints 
 import endPoints from './../endPoints';
+// import chatEndpoint from './../chatEndpoints';
 // instructions to connect to the db (registerDB)
 mongoose.connect(
     'mongodb://localhost:27017/registerDB', (error: any) => {
@@ -49,5 +50,7 @@ app.use(passportExpressMiddleware);
 app.use(cookieParser());
 // if the route from the browser implies /api sends them to the index.ts file on folder endpoints
 app.use('/api', endPoints);
+// app.use('/chat/api', endPoints);
+// app.use('/chat/api', chatEndpoint);
 // instruction to listen to a port 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -10,15 +10,19 @@
  import passportJWT from 'passport-jwt';
  
  router.use('/getAvailablecontacts', passport.authenticate('jwt', {session:false}), async(req,res)=>{
-     console.log(req.user)
+     console.log('req.user: ',req.user)
      const listOfAvailableContacts = await User.findOne({_id: req.user!._id}, {contacts:1})
      .populate({
-         path: 'contacts.conversationId',
-         select:  'participants creationTime',
-         populate: {
-             path: 'participants.participant',
-             select: 'email, username'
-         }});
+         path: 'contacts.contact',
+         select: 'username  email'
+     })
+    //  .populate({
+    //      path: 'contacts.conversationId',
+    //      select:  'participants creationTime',
+    //      populate: {
+    //          path: 'participants.participant',
+    //          select: 'email, username'
+    //      }});
      console.log('list from the populate for availablecontacts3:', listOfAvailableContacts)
     res.json(listOfAvailableContacts);
  })

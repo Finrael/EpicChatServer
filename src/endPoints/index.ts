@@ -6,6 +6,8 @@ import addContact from './addContacts';
 import { Router } from 'express';
 import getContacts from './getContactsForList'
 import getAvailablecontacts from './getAvailableContacts';
+import message from './message';
+import getmessages from './getMessages'
 const router = Router();
 
 
@@ -16,4 +18,6 @@ router.use(addContact);
 router.use(LFC);
 router.use(getContacts);
 router.use(getAvailablecontacts)
+router.use(message);
+router.use(getmessages)
 export default router;

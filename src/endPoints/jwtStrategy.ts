@@ -26,7 +26,7 @@ let opts: PassportJWT.StrategyOptions = {
 
 passport.use(new JwtStrategy(opts, function (jwt_payload: any, done: any) {
     // console.log('payload', jwt_payload);
-    User.findOne({ _id: jwt_payload._id }, { _id: 1  }, function (err, user) {
+    User.findOne({ _id: jwt_payload._id }, { _id: 1, username: 1  }, function (err, user) {
         if (err) {
              done(err, false);
         }
