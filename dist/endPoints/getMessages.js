@@ -13,15 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // imports
 const express_1 = __importDefault(require("express"));
-const messageSchema_1 = __importDefault(require("../db/models/messageSchema"));
+//  import User from '../db/models/messageSchema';
 const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
+const messageSchema_1 = __importDefault(require("../db/models/messageSchema"));
 router.post('/getMessages', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
-        console.log('body: ', req.body);
-        console.log('user: ', req.user);
+        // console.log('body: ', req.body);
+        // console.log('user: ', req.user);
         const listOfMessages = yield messageSchema_1.default.find({ conversationId: req.body.convId });
-        console.log(listOfMessages);
+        // console.log(listOfMessages)
         const messagesObject = {
             messageList: listOfMessages,
             conversationId: req.body.convId

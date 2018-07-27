@@ -10,8 +10,8 @@
  import passportJWT from 'passport-jwt';
  
  router.use('/getContacts', passport.authenticate('jwt', {session:false}), (req,res)=>{
- console.log('getContacts log', req.user);
- console.log('req body',req.body.emailToLookFor)
+//  console.log('getContacts log', req.user);
+//  console.log('req body',req.body.emailToLookFor)
 //  const query:any = User.find({email:req.body.query},{_id:1, email:1, name:1} )
 
  const query:any = User.find({email:new RegExp(req.body.emailToLookFor)},{_id:1, email:1, name:1} )

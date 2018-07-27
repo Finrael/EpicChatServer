@@ -17,10 +17,10 @@ const registerSchema_1 = __importDefault(require("../db/models/registerSchema"))
 const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
 router.use('/authenticate', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
-    console.log('from authenticate getProfile ', req.user);
-    debugger;
-    const dataFromProfile = yield registerSchema_1.default.findOne({ _id: req.user }, { username: 1, email: 1, contacts: 1 });
-    console.log('datafromProfile', dataFromProfile);
+    // console.log('from authenticate getProfile ',req.user);
+    // debugger
+    const dataFromProfile = yield registerSchema_1.default.findOne({ _id: req.user }, { username: 1, email: 1, contacts: 1, language: 1 });
+    // console.log('datafromProfile', dataFromProfile)
     res.json(dataFromProfile);
 }));
 exports.default = router;

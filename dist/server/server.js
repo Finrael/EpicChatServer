@@ -21,7 +21,12 @@ const passport_1 = __importDefault(require("passport"));
 require("../endPoints/jwtStrategy");
 //import the endpoints 
 const endPoints_1 = __importDefault(require("./../endPoints"));
-// import chatEndpoint from './../chatEndpoints';
+// import socket io
+const http_1 = __importDefault(require("http"));
+const SocketConfig_1 = require("../SocketConfig");
+// import * as SocketManager from ''
+// import {io}  from 'socket.io';
+// io(http)
 // instructions to connect to the db (registerDB)
 mongoose_1.default.connect('mongodb://localhost:27017/registerDB', (error) => {
     if (error) {
@@ -33,7 +38,10 @@ mongoose_1.default.connect('mongodb://localhost:27017/registerDB', (error) => {
         console.log('db connected');
     }
 });
-//create the strategy for passport with the data from the schema
+// io.on('connection', function (socket:any){
+// console.log('user has connected')
+// })
+// create the strategy for passport with the data from the schema
 passport_1.default.use(registerSchema_1.default.createStrategy());
 // initialize passport middleware
 const passportExpressMiddleware = passport_1.default.initialize();
@@ -48,4 +56,10 @@ app.use('/api', endPoints_1.default);
 // app.use('/chat/api', endPoints);
 // app.use('/chat/api', chatEndpoint);
 // instruction to listen to a port 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const server = http_1.default.createServer(app);
+server.listen(port, () => console.log(`Listening on port ${port}`));
+SocketConfig_1.Config(server);
+// console.log('Socket online')
+// io.emit('This is for some reason an event', 'this is to be send2')
+// connecting all the conversations
+// app.listen(port, () => console.log(`Listening on port ${port}`));

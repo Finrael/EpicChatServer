@@ -14,12 +14,20 @@ import {
 } from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose';
 // export the interace IregisterProps which provides the types for the props fiven to Register
+type ObjectId = typeof SchemaTypes.ObjectId;
+
+interface IContact {
+    contact: ObjectId;
+    conversationId: ObjectId;
+}
+
 export interface IRegisterProps extends Document, PassportLocalDocument{
     username:string;
     email:string;
     password:string;
     attempts:number;
-    contacts:string[];
+    contacts: IContact[];
+    language:string;
 }
 // creates the schema for the db
 const registerSchema = new Schema({
@@ -29,6 +37,7 @@ const registerSchema = new Schema({
     attempts:Number,
     contacts: [{contact:
         {type:SchemaTypes.ObjectId, ref:'users'}, conversationId:{type:SchemaTypes.ObjectId, ref:'conversation'}} ],
+    language:String,
 });
 //create the options object and fills the required fields
 let options: PassportLocalOptions = <PassportLocalOptions>{};

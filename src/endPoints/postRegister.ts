@@ -10,7 +10,7 @@ router.post('/register', (req, res) => {
         username: req.body.username,
         email: req.body.email,
         contacts: [],
-        // password: req.body.password
+        language:req.body.language,
     });
     post.setPassword(req.body.password, function (err, user) {
         if (err) {
@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
             }
         })
     });
-    console.log('postRegister is in: ', req.body);
+    // console.log('postRegister is in: ', req.body);
 // res.end();
 });
  

@@ -23,7 +23,7 @@ let opts = {
 };
 passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
     // console.log('payload', jwt_payload);
-    registerSchema_1.default.findOne({ _id: jwt_payload._id }, { _id: 1, username: 1 }, function (err, user) {
+    registerSchema_1.default.findOne({ _id: jwt_payload._id }, { _id: 1, username: 1, email: 1 }, function (err, user) {
         if (err) {
             done(err, false);
         }

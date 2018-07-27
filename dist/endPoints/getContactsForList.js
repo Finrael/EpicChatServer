@@ -18,7 +18,7 @@ const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
 router.use('/getContactsForList', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
     const listOfIDfromContacts = yield registerSchema_1.default.findOne({ _id: req.user._id }, { contacts: 1 }).populate('contacts', { email: 1, username: 1 });
-    console.log('list from the populate:', listOfIDfromContacts);
+    // console.log('list from the populate:', listOfIDfromContacts)
     res.json(listOfIDfromContacts);
 }));
 exports.default = router;

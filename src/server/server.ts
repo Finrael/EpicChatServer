@@ -14,16 +14,25 @@ import mongoose, { Schema, Model, model } from 'mongoose';
 import User from '../db/models/registerSchema';
 // import the rest of the libraries
 import passport from 'passport';
-import {Strategy as LocalStrategy} from 'passport-local';
+import { Strategy as LocalStrategy } from 'passport-local';
 import passportLocalMongoose from 'passport-local-mongoose';
 // import schema from '../db/models/schema';
-import { Session } from 'inspector'; 
+import { Session } from 'inspector';
 import PassportJWT from 'passport-jwt';
 // import and make jwtStrategy run (execute instructions on that file)
 import '../endPoints/jwtStrategy';
 //import the endpoints 
 import endPoints from './../endPoints';
-// import chatEndpoint from './../chatEndpoints';
+// import socket io
+import http from 'http';
+import SocketIO from 'socket.io';
+import conversation from '../db/models/conversationSchema'
+import {Config, io} from '../SocketConfig'
+// import * as SocketManager from ''
+
+// import {io}  from 'socket.io';
+// io(http)
+
 // instructions to connect to the db (registerDB)
 mongoose.connect(
     'mongodb://localhost:27017/registerDB', (error: any) => {
@@ -38,10 +47,14 @@ mongoose.connect(
         }
     }
 )
-//create the strategy for passport with the data from the schema
+
+// io.on('connection', function (socket:any){
+// console.log('user has connected')
+// })
+// create the strategy for passport with the data from the schema
 passport.use(User.createStrategy());
 // initialize passport middleware
-const passportExpressMiddleware= passport.initialize();
+const passportExpressMiddleware = passport.initialize();
 // activate body parser (allows us to get the body from the request )
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,4 +66,12 @@ app.use('/api', endPoints);
 // app.use('/chat/api', endPoints);
 // app.use('/chat/api', chatEndpoint);
 // instruction to listen to a port 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const server = http.createServer(app);
+server.listen(port, () => console.log(`Listening on port ${port}`));
+Config(server);
+
+// console.log('Socket online')
+// io.emit('This is for some reason an event', 'this is to be send2')
+// connecting all the conversations
+
+// app.listen(port, () => console.log(`Listening on port ${port}`));

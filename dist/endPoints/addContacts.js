@@ -32,8 +32,9 @@ router.post('/addContacts', passport_1.default.authenticate('jwt', { session: fa
         // console.log('length', checkForContactPresence.length)
         if (checkForContactPresence.length === 0) {
             let filter = { email: req.body.email };
+            let filter2 = { email: newContact[0].email };
             //create conversation
-            console.log(newContact[0]._id);
+            // console.log(newContact[0]._id)
             const creationDate = new Date();
             const newConversation = {
                 participants: [{ participant: req.user._id, joinedDate: creationDate, status: 1 },
@@ -41,15 +42,17 @@ router.post('/addContacts', passport_1.default.authenticate('jwt', { session: fa
                 creationTime: creationDate,
             };
             const generateConversation = yield conversationSchema_1.default.create(newConversation);
-            console.log('This is the conversation:', generateConversation._id, ' and the contact is', newContact[0]._id);
+            // console.log('This is the conversation:', generateConversation._id, ' and the contact is', newContact[0]._id, "this is the user ", req.user!._id);
             let update = { $push: { contacts: { contact: newContact[0]._id, conversationId: generateConversation._id } } };
+            let update2 = { $push: { contacts: { contact: req.user._id, conversationId: generateConversation._id } } };
             const updateUser = yield registerSchema_1.default.update(filter, update);
+            const updateUser2 = yield registerSchema_1.default.update(filter2, update2);
             res.end('Contact saved');
         }
         else {
             res.end('Contact can not be saved');
         }
-        console.log('postRegister is in: ', req.body);
+        // console.log('postRegister is in: ', req.body);
     }
     catch (e) {
         console.log('error: ', e);

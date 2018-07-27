@@ -2,7 +2,7 @@
  import express, { json } from 'express';
  import cookieParser from 'cookie-parser';
  import bodyParser from 'body-parser';
- import User from '../db/models/messageSchema';
+//  import User from '../db/models/messageSchema';
  import passport from 'passport';
  const router = express.Router();
  import jwt, { verify } from 'jsonwebtoken';
@@ -13,10 +13,10 @@ import {Types, Schema} from "mongoose";
 
  router.post('/getMessages', passport.authenticate('jwt', {session:false}), async(req,res)=>{
 try{
-    console.log('body: ', req.body);
-    console.log('user: ', req.user);
-    const listOfMessages = await User.find({conversationId:req.body.convId})
-    console.log(listOfMessages)
+    // console.log('body: ', req.body);
+    // console.log('user: ', req.user);
+    const listOfMessages = await message.find({conversationId:req.body.convId})
+    // console.log(listOfMessages)
     const messagesObject ={
         messageList: listOfMessages,
         conversationId:req.body.convId

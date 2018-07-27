@@ -13,6 +13,7 @@ const registerSchema = new mongoose_1.Schema({
     password: String,
     attempts: Number,
     contacts: [{ contact: { type: mongoose_1.SchemaTypes.ObjectId, ref: 'users' }, conversationId: { type: mongoose_1.SchemaTypes.ObjectId, ref: 'conversation' } }],
+    language: String,
 });
 //create the options object and fills the required fields
 let options = {};

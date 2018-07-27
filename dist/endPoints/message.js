@@ -17,11 +17,12 @@ const passport_1 = __importDefault(require("passport"));
 const router = express_1.default.Router();
 const messageSchema_1 = __importDefault(require("../db/models/messageSchema"));
 const mongoose_1 = require("mongoose");
+const SocketConfig_1 = require("../SocketConfig");
 router.use('/message', passport_1.default.authenticate('jwt', { session: false }), (req, res) => __awaiter(this, void 0, void 0, function* () {
     //  console.log('from authenticate getProfile ',req.user);
     try {
-        console.log('body: ', req.body);
-        console.log('user: ', req.user);
+        // console.log('body: ', req.body);
+        // console.log('user: ', req.user);
         const creationDate = new Date();
         const newMessage = {
             messageText: req.body.textMessage,
@@ -30,8 +31,10 @@ router.use('/message', passport_1.default.authenticate('jwt', { session: false }
             conversationId: new mongoose_1.Types.ObjectId(req.body.convId),
         };
         const generateMessage = yield messageSchema_1.default.create(newMessage);
-        console.log(generateMessage);
+        //  console.log(generateMessage)
         res.json(generateMessage);
+        SocketConfig_1.io.to(req.body.convId).emit('newMessage', generateMessage);
+        console.log('it whent int to /message', req.body.convId);
     }
     catch (e) {
         console.log(e);

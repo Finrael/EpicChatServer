@@ -10,7 +10,7 @@
  import passportJWT from 'passport-jwt';
  
  router.use('/getAvailablecontacts', passport.authenticate('jwt', {session:false}), async(req,res)=>{
-     console.log('req.user: ',req.user)
+    //  console.log('req.user: ',req.user)
      const listOfAvailableContacts = await User.findOne({_id: req.user!._id}, {contacts:1})
      .populate({
          path: 'contacts.contact',
@@ -23,7 +23,7 @@
     //          path: 'participants.participant',
     //          select: 'email, username'
     //      }});
-     console.log('list from the populate for availablecontacts3:', listOfAvailableContacts)
+    //  console.log('list from the populate for availablecontacts3:', listOfAvailableContacts)
     res.json(listOfAvailableContacts);
  })
 
